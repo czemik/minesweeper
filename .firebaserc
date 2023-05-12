@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "minesweeper-1ef91": {
+      "hosting": {
+        "Minesweeper": [
+          "minesweeper-1ef91"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "minesweeper-1ef91"
+  }
+}
