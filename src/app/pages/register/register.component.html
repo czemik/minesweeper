@@ -1,1 +1,18 @@
-<p>register works!</p>
+<span class="loading-indicator" *ngIf="loading"><mat-spinner></mat-spinner></span>
+<div class="main_component">
+    <div class="div-center">
+        <h1>Regisztráció</h1>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline"><mat-label for="username">Felhasználónév</mat-label><input matInput type="text" formControlName="username"></mat-form-field>
+            <mat-form-field appearance="outline"><mat-label for="email">E-mail cím</mat-label><input matInput type="email" formControlName="email"></mat-form-field>
+            <mat-form-field appearance="outline"><mat-label for="password">Jelszó</mat-label><input matInput type="password" formControlName="password"></mat-form-field>
+            <mat-form-field appearance="outline"><mat-label for="rePassword">Jelszó megerősítése</mat-label><input matInput type="password" formControlName="rePassword"></mat-form-field>
+            <span>
+                <span class="buttons"><button mat-raised-button type="submit">Regisztráció</button></span>
+                <span class="buttons"><button mat-raised-button type="reset" [routerLink]="'/login'">Bejelentkezés</button></span>
+            </span>
+        </form>
+    
+    
+    </div>
+</div>
