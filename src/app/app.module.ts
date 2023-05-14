@@ -33,6 +33,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { TimePipe } from './shared/pipes/time.pipe';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MainComponent,
     ScoreboardComponent,
     MenuComponent,
-    FooterComponent
+    FooterComponent,
+    TimePipe
   ],
   imports: [
     BrowserModule,

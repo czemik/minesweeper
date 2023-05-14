@@ -1,12 +1,30 @@
 <div class="main_component div-flex">
     
     <h1>Scoreboard</h1>
-    
-    <div *ngFor="let score of scores$ | async">
-        <span>{{score.username}}, {{score.difficulty.name}}, {{score.time}}</span>
+    <div class="scoreboard" *ngFor="let score of scores$ | async; let i = index">
+        <div class="scoreboard-row" *ngIf="i===0">
+            <span class="username">Username</span>
+            <span class="difficulty">Difficulty</span>
+            <span class="time">Time</span>
+        </div>
+        <div class="scoreboard-row">
+            <span class="username">{{score.username}}</span>
+            <span class="difficulty">{{score.difficulty.name}}</span>
+            <span class="time">{{score.time | time}}</span>
+        </div>
     </div>
-    <span *ngIf="(indexdb.scores$| async)">Offline scores</span>
-    <div *ngFor="let score of indexdb.scores$ | async">
-        <span>{{score.username}}, {{score.difficulty.name}}, {{score.time}}</span>
+
+    <div *ngFor="let score of offlineScores$ | async; let i = index">
+        <h2 *ngIf="i === 0">Offline scores</h2>
+        <div class="scoreboard-row" *ngIf="i===0">
+            <span class="username">Username</span>
+            <span class="difficulty">Difficulty</span>
+            <span class="time">Time</span>
+        </div>
+        <div class="scoreboard-row">
+            <span class="username">{{score.username}}</span>
+            <span class="difficulty">{{score.difficulty.name}}</span>
+            <span class="time">{{score.time | time}}</span>
+        </div>
     </div>
 </div>

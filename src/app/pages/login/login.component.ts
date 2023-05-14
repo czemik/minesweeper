@@ -27,7 +27,7 @@ export class LoginComponent {
     const pwLog:string = this.loginForm.get('password')!.value || ''; 
     if(emailLog === '' || pwLog === ''){
         this.loading = false;
-        this.snackBar.open("Tölts ki minden mezőt!", "Bezárás")
+        this.snackBar.open("Fill the fields!", "Cancel")
         return
     }
     this.loading = true;
@@ -36,7 +36,7 @@ export class LoginComponent {
         this.router.navigateByUrl('/main');
     }).catch(err => {
         this.loading = false;
-        this.snackBar.open("Nem megfelelő email vagy jelszó!", "Bezárás")
+        this.snackBar.open("Incorrect email or password!", "Cancel")
     });
   }
 }

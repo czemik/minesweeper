@@ -18,9 +18,9 @@ export class MainComponent implements OnInit{
   time: number = 0;
   timerInterval: any;
   inGame: boolean = false;
-  username!: string;
+  username: string = '';
   gameLost!: boolean;
-  difficulties: Difficulty[] = [{name: 'Easy', rows: 10, cols: 10, mines: 10}, {name: 'Medium', rows: 16, cols: 16, mines: 40}, {name: 'Hard', rows: 16, cols: 30, mines: 99} ];
+  difficulties: Difficulty[] = [{name: 'Easy', rows: 10, cols: 10, mines: 10}, {name: 'Medium', rows: 16, cols: 16, mines: 40}, {name: 'Hard', rows: 30, cols: 16, mines: 99} ];
   difficulty: Difficulty = this.difficulties[0];
 
   diff: FormControl = new FormControl(this.difficulty)
@@ -31,14 +31,14 @@ export class MainComponent implements OnInit{
   }
   
   ngOnInit(): void {
-    console.log("Init")
     this.auth.isUserLoggedIn().pipe(first()).subscribe(val => {
-      this.userService.getUserById(val!.uid).pipe(first()).subscribe(val => {
-        this.username = val.data()!.username;
-       console.log(this.username)
-      })
+      if(val !== null){
+        this.userService.getUserById(val!.uid).pipe(first()).subscribe(val => {
+          this.username = val.data()!.username;
+          console.log(this.username)
+        })
+      }
     })
-
     
   }
 
@@ -75,9 +75,10 @@ export class MainComponent implements OnInit{
         time: this.time
       }
       if(!navigator.onLine){
+        score.username = "Unknown"
         this.indexdb.addItem(score)
       }
-      else{
+      else if(this.username !== ''){
         this.scoreService.create(score);
       }
     }

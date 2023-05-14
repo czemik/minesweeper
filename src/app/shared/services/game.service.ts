@@ -71,6 +71,7 @@ export class GameService {
   }
 
   revealCell(row: number, col: number): void {
+    if (this.gameLost || this.gameLost) return
     if (this.board[row][col].isRevealed || this.board[row][col].isFlagged) {
       return;
     }
@@ -111,6 +112,7 @@ export class GameService {
   }
 
   flagCell(row: number, col: number): void {
+    if (this.gameLost || this.gameLost) return
     if (!this.board[row][col].isRevealed) {
       this.board[row][col].isFlagged = !this.board[row][col].isFlagged;
     }

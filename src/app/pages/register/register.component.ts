@@ -27,7 +27,7 @@ export class RegisterComponent {
   onSubmit(){
     if (this.registerForm.get('email')!.value === '' || this.registerForm.get('password')!.value === '' 
           || this.registerForm.get('rePassword')!.value === '' || this.registerForm.get('username')!.value === ''){
-      this.snackBar.open("Tölts ki minden mezőt!", "Bezárás")
+      this.snackBar.open("Fill the fields!", "Cancel")
       this.loading = false;
       return
     }
@@ -37,7 +37,7 @@ export class RegisterComponent {
     const pwRegRe: string = this.registerForm.get('rePassword')?.value || '';
     
     if(pwReg !== pwRegRe){
-      this.snackBar.open('A két jelszó nem egyezik!', 'Mégse');
+      this.snackBar.open("The passwords don't match!", 'Cancel');
       this.loading = false;
       return
     } 
@@ -52,14 +52,14 @@ export class RegisterComponent {
         this.loading = false;
         //console.log(user);
       }).catch(err =>{
-        this.snackBar.open('Hiba történt, az email cím jó-e?', 'Mégse');
+        this.snackBar.open("Something's wrong", 'Cancel');
       this.loading = false;
         this.loading = false;
       })
       this.router.navigateByUrl('/login');
 
     }).catch(err => {
-      this.snackBar.open('Hiba történt, az email cím jó-e?', 'Mégse');
+      this.snackBar.open("Something's wrong", 'Cancel');
       this.loading = false;
     });
   }

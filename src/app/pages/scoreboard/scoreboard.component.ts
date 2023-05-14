@@ -13,8 +13,10 @@ export class ScoreboardComponent implements OnInit{
 
   constructor(protected indexdb: IndexdbService, protected scoreService: ScoreService){}
   scores$!: Observable<Score[]>
+  offlineScores$!: Observable<Score[]>
 
   ngOnInit(): void {
     this.scores$ = this.scoreService.getAll()
+    this.offlineScores$ = this.indexdb.scores$
   }
 }

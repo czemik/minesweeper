@@ -19,7 +19,20 @@
     margin-top:30px;
     min-height: 100vh;
 }
+table{
+    table-layout: fixed;
+    //width: 100%;
+    margin: 0 20px;
+    overflow: scroll;
+}
 
+.rotate{
+    display:none;
+}
+
+.game{
+    //display:;
+}
 
 .card {
     width:30%;
@@ -30,19 +43,61 @@ span{
     margin: 10px;
 }
 
-td {
-    width: 20px;
-    height: 20px;
-    border: 1px solid black;
-}
-tr {
-    width:200px;
-}
+
+
+/* Variables */
+$cell-size: 30px;
+$cell-border-color: #999;
+$cell-background-color: #ccc;
+$cell-text-color: #333;
+$revealed-color: #C0FF00;
+$mine-color: #ff0000;
+$flag-color: #0000ff;
+
+/* Game Board */
+
+.cell {
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+  color: $cell-text-color;
+  background-color: $cell-background-color;
+  border: 1px solid $cell-border-color;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &.revealed {
+    background-color: $revealed-color;
+    cursor: default;
+  }
+
+  &.mine {
+    background-color: $mine-color;
+    color: white;
+  }
+
+  &.flagged {
+    background-color: $flag-color;
+    color: white;
+  }
+
   
-.revealed {
-    background-color: yellow;
 }
-  
-.mine {
-    background-color: red;
+
+.game-over {
+color: red;
 }
+
+.game-won {
+color: green;
+}
+
+
+@media (max-width: 700px) {
+    .game{
+        display:none;
+    }
+    .rotate{
+        display:block;
+    }
+  }

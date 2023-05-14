@@ -15,7 +15,7 @@ export class ScoreService {
   }
 
   getAll(){
-    return this.afs.collection<Score>(this.collectionName).valueChanges();
+    return this.afs.collection<Score>(this.collectionName, ref => ref.orderBy("difficulty.name").orderBy("time")).valueChanges();
   }
 
 }

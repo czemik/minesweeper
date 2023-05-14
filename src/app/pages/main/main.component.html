@@ -1,38 +1,41 @@
-<div class="main_component div-flex">
+<div class="main_component  div-flex" >
     
     <h1>Minesweeper PWA</h1>
-    <div>
-        <mat-form-field appearance="outline">
-            <mat-label>Difficulty: </mat-label>
-            <mat-select matNativeControl [formControl]="diff">
-                <mat-option *ngFor="let dif of difficulties" [value]="dif">{{dif.name}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+    <div class="game div-flex">
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Difficulty: </mat-label>
+                <mat-select matNativeControl [formControl]="diff">
+                    <mat-option *ngFor="let dif of difficulties" [value]="dif">{{dif.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        
+        <span>
+            <span><button mat-raised-button (click)="start()">Start</button></span>
+            <span><button mat-raised-button (click)="stop()">Stop</button></span>
+        </span>
+        
+        <h2>Time: {{time | time}}</h2>
+        <h2 *ngIf="game.gameLost" class="game-over">You lost!</h2>
+        <h2 *ngIf="game.gameWon" class="game-won">You won!</h2>
+        <div class="div-flex">
+            <table>
+                <tr *ngFor="let row of game.board; index as rowIndex">
+                  <td *ngFor="let cell of row; index as colIndex"
+                      (click)="game.revealCell(rowIndex, colIndex); gameStateChecker()"
+                      (contextmenu)="game.flagCell(rowIndex, colIndex); $event.preventDefault()" 
+                      [ngClass]="{'cell': true,'revealed': cell.isRevealed, 'mine': cell.isMine && game.gameLost, 'flagged': cell.isFlagged}">
+                    <div>
+                      <div *ngIf="cell.isRevealed && !cell.isMine">{{cell.neighborMineCount || ''}}</div>
+                      <div *ngIf="cell.isFlagged">F</div>
+                    </div>
+                  </td>
+                </tr>
+            </table>
+        </div>
     </div>
     
-    <span>
-        <span><button mat-raised-button (click)="start()">Start</button></span>
-        <span><button mat-raised-button (click)="stop()">Stop</button></span>
-    </span>
-    
-    <span>{{time}}</span>
-    <div *ngIf="game.gameLost">You lost!</div>
-    <div *ngIf="game.gameWon">You won!</div>
-    <div class="div-flex">
-        <table>
-            <tr *ngFor="let row of game.board; index as rowIndex">
-              <td *ngFor="let cell of row; index as colIndex"
-                  (click)="game.revealCell(rowIndex, colIndex); gameStateChecker()"
-                  (contextmenu)="game.flagCell(rowIndex, colIndex); $event.preventDefault()" 
-                  [ngClass]="{'revealed': cell.isRevealed, 'mine': cell.isMine && game.gameLost }">
-                <div>
-                  <div *ngIf="cell.isRevealed && !cell.isMine">{{cell.neighborMineCount || ''}}</div>
-                  <div *ngIf="cell.isFlagged">F</div>
-                </div>
-              </td>
-            </tr>
-        </table>
-    </div>
-    
+    <h2 class="rotate">Rotate your device to play the game</h2>
 
 </div>

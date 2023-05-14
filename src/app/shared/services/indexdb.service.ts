@@ -42,14 +42,13 @@ export class IndexdbService {
   }
 
   private loadItems() {
-    const objectStore = this.db.transaction(this.objectStoreName).objectStore(this.objectStoreName);
-
     this.scores$ = new Observable<Score[]>((observer) => {
       const items: Score[] = [];
 
-      objectStore.openCursor().onsuccess = (event: any) => {
+      this.db.transaction(this.objectStoreName).objectStore(this.objectStoreName).openCursor().onsuccess = (event: any) => {
         const cursor = event.target.result;
         if (cursor) {
+          console.log(cursor.value);
           items.push(cursor.value);
           cursor.continue();
         } else {
