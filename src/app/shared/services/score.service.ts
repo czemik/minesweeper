@@ -14,4 +14,8 @@ export class ScoreService {
     return this.afs.collection<Score>(this.collectionName).add(score);
   }
 
+  getAll(){
+    return this.afs.collection<Score>(this.collectionName).valueChanges();
+  }
+
 }

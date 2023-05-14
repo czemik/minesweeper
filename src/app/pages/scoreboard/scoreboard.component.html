@@ -1,5 +1,12 @@
 <div class="main_component div-flex">
     
     <h1>Scoreboard</h1>
-
+    
+    <div *ngFor="let score of scores$ | async">
+        <span>{{score.username}}, {{score.difficulty.name}}, {{score.time}}</span>
+    </div>
+    <span *ngIf="(indexdb.scores$| async)">Offline scores</span>
+    <div *ngFor="let score of indexdb.scores$ | async">
+        <span>{{score.username}}, {{score.difficulty.name}}, {{score.time}}</span>
+    </div>
 </div>

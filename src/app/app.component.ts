@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AuthService } from './shared/services/auth.service';
+import { SwUpdate } from "@angular/service-worker";
 
 @Component({
   selector: 'app-root',
@@ -12,15 +13,23 @@ export class AppComponent implements OnInit{
   page = 'main';
   loggedInUser?: firebase.default.User | null;
 
-  constructor(private authService: AuthService){}
+  constructor(private authService: AuthService, private swUpdate: SwUpdate){}
 
   ngOnInit(): void {
     this.authService.isUserLoggedIn().subscribe(user => {
       this.loggedInUser = user;
+      console.log("User set!");
       localStorage.setItem('user', JSON.stringify(this.loggedInUser));
     }, error => {
       console.error(error);
       localStorage.setItem('user', JSON.stringify('null'));
+    });
+
+    this.swUpdate.checkForUpdate().then(data => {
+      if (data) {
+        alert("New version available");
+        window.location.reload();
+      }
     });
   }
 

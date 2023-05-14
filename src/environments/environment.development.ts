@@ -1,4 +1,5 @@
 export const environment = {
+  production: true,
   firebase: {
     projectId: 'minesweeper-1ef91',
     appId: '1:201410933659:web:61b46a61d66b2ae2fd273e',

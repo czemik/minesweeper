@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Cell } from '../../shared/models/Cell';
 import { GameService } from 'src/app/shared/services/game.service';
 import { Difficulty } from 'src/app/shared/models/Difficulty';
@@ -7,6 +7,7 @@ import { ScoreService } from 'src/app/shared/services/score.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { first } from 'rxjs';
+import { IndexdbService } from 'src/app/shared/services/indexdb.service';
 
 @Component({
   selector: 'app-main',
@@ -24,17 +25,21 @@ export class MainComponent implements OnInit{
 
   diff: FormControl = new FormControl(this.difficulty)
 
-  constructor(protected game: GameService, private scoreService: ScoreService, private userService: UserService, private auth: AuthService) {
+
+  constructor(protected game: GameService, private scoreService: ScoreService, private userService: UserService, private auth: AuthService, private indexdb: IndexdbService) {
     
   }
   
   ngOnInit(): void {
     console.log("Init")
-    const getUsername$ = this.userService.getUserById(JSON.parse(localStorage.getItem('user') as string).uid as string).pipe(first());
-    getUsername$.subscribe(val =>{
-       this.username = val.data()!.username;
+    this.auth.isUserLoggedIn().pipe(first()).subscribe(val => {
+      this.userService.getUserById(val!.uid).pipe(first()).subscribe(val => {
+        this.username = val.data()!.username;
        console.log(this.username)
       })
+    })
+
+    
   }
 
   newGame(){
@@ -69,7 +74,12 @@ export class MainComponent implements OnInit{
         difficulty: this.difficulty,
         time: this.time
       }
-      this.scoreService.create(score);
+      if(!navigator.onLine){
+        this.indexdb.addItem(score)
+      }
+      else{
+        this.scoreService.create(score);
+      }
     }
     else if(this.game.gameLost)
       this.stop()
